@@ -1,6 +1,7 @@
 package com.foxsteven.search_utilities.entity_loader;
 
 import com.foxsteven.search_utilities.entity_loader.abstractions.ListSegmenter;
+import com.foxsteven.search_utilities.entity_loader.abstractions.ClassBasedListSegmenterFactory;
 import com.foxsteven.search_utilities.entity_loader.abstractions.StringIdentifiable;
 import com.foxsteven.search_utilities.entity_loader.abstractions.StringIdentifiableEntityLoader;
 
@@ -10,16 +11,17 @@ import java.util.List;
 public class OrderingEntityLoaderDecorator implements StringIdentifiableEntityLoader {
     private final StringIdentifiableEntityLoader entityLoader;
 
-    private final ListSegmenter listSegmenter;
+    private final ClassBasedListSegmenterFactory listSegmenterFactory;
 
     public OrderingEntityLoaderDecorator(StringIdentifiableEntityLoader entityLoader,
-                                         ListSegmenter listSegmenter) {
+                                         ClassBasedListSegmenterFactory listSegmenterFactory) {
         this.entityLoader = entityLoader;
-        this.listSegmenter = listSegmenter;
+        this.listSegmenterFactory = listSegmenterFactory;
     }
 
     @Override
     public <T extends StringIdentifiable> List<T> load(List<String> identifiers, Class<T> entityClass) {
+        final var listSegmenter = listSegmenterFactory.create(entityClass);
         final var comparator = new PositionBasedComparator<T>();
 
         final var identifierSegments = listSegmenter.segment(identifiers);

@@ -10,12 +10,10 @@ The company's implementation is bad for the following reasons:
 This repository is my attempt to solve this mess.
 
 The `entity_loader` module provides functionalities for loading entities from an identifier list. The base`StringIdentifiableEntityLoader` interface doesn't guarantee that the returned entities will be in order. To solve the ordering problem, the `OrderingEntityLoaderDecorator` uses the following strategy:
-1. it segments the identifier list into segments of identifiers via a `ListSegmenter`.
+1. it segments the identifier list into segments of identifiers via a `ListSegmenter` provided based on the entity type.
 2. for each segment, it loads the corresponding entities via a wrapped `StringIdentifiableEntityLoader`, then sorts the entity list based on their positions in the identifier list, and appends the sorted entity list into the result entity list.
 
-By providing a `ListSegmenter` implementation, you can tune performance for this decorator, segment size should not be too small to reduce the number of network round trips, and it should not be too large either because of sorting overhead.
-
-Currently, there are two implementations of `ListSegmenter`, one is `ConstantListSegmenter` which segments a list into constant-sized segments, and the other is `CostBasedListSegmenter` which segments a list based on a customizable policy on the type of the element of the list, and I think the latter is enough for most use cases.
+By providing a `ClassBasedListSegmenterFactory` implementation, you can tune performance for this decorator, segment size should not be too small to reduce the number of network round trips, and it should not be too large either because of sorting overhead.
 
 In the `searching` module, I manage a boolean expression hierarchy named `Expression`, which covers my use cases.
 The hierarchy doesn't depend on Elasticsearch (although it's inspired by Elasticsearch) so you can use this hierarchy for other search engines as well.
