@@ -1,7 +1,7 @@
 package com.foxsteven.search_utilities.entity_loader;
 
-import com.foxsteven.search_utilities.entity_loader.abstractions.ListSegmenter;
-import com.foxsteven.search_utilities.entity_loader.abstractions.ClassBasedListSegmenterFactory;
+import com.foxsteven.search_utilities.entity_loader.abstractions.ListSegmenterFactory;
+import com.foxsteven.search_utilities.entity_loader.abstractions.PositionBasedListSorter;
 import com.foxsteven.search_utilities.entity_loader.abstractions.StringIdentifiable;
 import com.foxsteven.search_utilities.entity_loader.abstractions.StringIdentifiableEntityLoader;
 
@@ -11,18 +11,21 @@ import java.util.List;
 public class OrderingEntityLoaderDecorator implements StringIdentifiableEntityLoader {
     private final StringIdentifiableEntityLoader entityLoader;
 
-    private final ClassBasedListSegmenterFactory listSegmenterFactory;
+    private final ListSegmenterFactory listSegmenterFactory;
+
+    private final PositionBasedListSorter listSorter;
 
     public OrderingEntityLoaderDecorator(StringIdentifiableEntityLoader entityLoader,
-                                         ClassBasedListSegmenterFactory listSegmenterFactory) {
+                                         ListSegmenterFactory listSegmenterFactory,
+                                         PositionBasedListSorter listSorter) {
         this.entityLoader = entityLoader;
         this.listSegmenterFactory = listSegmenterFactory;
+        this.listSorter = listSorter;
     }
 
     @Override
     public <T extends StringIdentifiable> List<T> load(List<String> identifiers, Class<T> entityClass) {
         final var listSegmenter = listSegmenterFactory.create(entityClass);
-        final var comparator = new PositionBasedComparator<T>();
 
         final var identifierSegments = listSegmenter.segment(identifiers);
 
@@ -31,8 +34,7 @@ public class OrderingEntityLoaderDecorator implements StringIdentifiableEntityLo
         for (final var identifierSegment: identifierSegments) {
             final var entitySegment = entityLoader.load(identifierSegment, entityClass);
 
-            comparator.prepare(identifierSegment);
-            entitySegment.sort(comparator);
+            listSorter.sort(identifiers, entitySegment);
 
             entities.addAll(entitySegment);
         }

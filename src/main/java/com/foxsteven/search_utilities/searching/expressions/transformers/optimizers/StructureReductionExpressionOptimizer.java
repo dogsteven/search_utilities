@@ -1,6 +1,5 @@
-package com.foxsteven.search_utilities.searching.expressions.optimizers.reduction;
+package com.foxsteven.search_utilities.searching.expressions.transformers.optimizers;
 
-import com.foxsteven.search_utilities.searching.expressions.optimizers.abstractions.HomogeneousExpressionOptimizer;
 import com.foxsteven.search_utilities.searching.expressions.AndExpression;
 import com.foxsteven.search_utilities.searching.expressions.Expression;
 import com.foxsteven.search_utilities.searching.expressions.NotExpression;
@@ -9,7 +8,7 @@ import com.foxsteven.search_utilities.searching.expressions.OrExpression;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
-public class StructureReductionExpressionOptimizer extends HomogeneousExpressionOptimizer {
+public class StructureReductionExpressionOptimizer extends BooleanExpressionOptimizer {
     @Override
     public Expression visitOrExpression(OrExpression expression) {
         final var subExpressions = new ArrayList<Expression>();
@@ -17,7 +16,7 @@ public class StructureReductionExpressionOptimizer extends HomogeneousExpression
 
         expression.subExpressions()
                 .stream()
-                .map(this::optimize)
+                .map(this::transform)
                 .flatMap(subExpression -> {
                     if (subExpression instanceof OrExpression orExpression) {
                         return orExpression.subExpressions().stream();
@@ -60,7 +59,7 @@ public class StructureReductionExpressionOptimizer extends HomogeneousExpression
 
         expression.subExpressions()
                 .stream()
-                .map(this::optimize)
+                .map(this::transform)
                 .flatMap(subExpression -> {
                     if (subExpression instanceof AndExpression andExpression) {
                         return andExpression.subExpressions().stream();

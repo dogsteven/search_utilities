@@ -130,8 +130,7 @@ public class HomogeneousExpressionToQueryTranslator implements ExpressionToQuery
 
     @Override
     public Query visitTextContainmentPrimitive(TextContainmentPrimitive expression) {
-        Boolean caseInsensitive = expression.isCaseInsensitive() ? true : null;
-
+        final Boolean caseInsensitive = expression.isCaseInsensitive() ? true : null;
 
         return Query.of(query -> query
                 .wildcard(wildcard -> wildcard
@@ -141,8 +140,30 @@ public class HomogeneousExpressionToQueryTranslator implements ExpressionToQuery
     }
 
     @Override
+    public Query visitTextPrefixPrimitive(TextPrefixPrimitive expression) {
+        final Boolean caseInsensitive = expression.isCaseInsensitive() ? true : null;
+
+        return Query.of(query -> query
+                .wildcard(wildcard -> wildcard
+                        .field(expression.field())
+                        .value(expression.value() + "*")
+                        .caseInsensitive(caseInsensitive)));
+    }
+
+    @Override
+    public Query visitTextSuffixPrimitive(TextSuffixPrimitive expression) {
+        final Boolean caseInsensitive = expression.isCaseInsensitive() ? true : null;
+
+        return Query.of(query -> query
+                .wildcard(wildcard -> wildcard
+                        .field(expression.field())
+                        .value("*" + expression.value())
+                        .caseInsensitive(caseInsensitive)));
+    }
+
+    @Override
     public Query visitWildcardPrimitive(WildcardPrimitive expression) {
-        Boolean caseInsensitive = expression.isCaseInsensitive() ? true : null;
+        final Boolean caseInsensitive = expression.isCaseInsensitive() ? true : null;
 
         return Query.of(query -> query
                 .wildcard(wildcard -> wildcard

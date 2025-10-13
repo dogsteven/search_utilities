@@ -1,10 +1,11 @@
-package com.foxsteven.search_utilities.searching.expressions.optimizers.abstractions;
+package com.foxsteven.search_utilities.searching.expressions.transformers.optimizers;
 
 import com.foxsteven.search_utilities.searching.expressions.*;
+import com.foxsteven.search_utilities.searching.expressions.transformers.abstractions.ExpressionTransformer;
 
-public abstract class HomogeneousExpressionOptimizer implements ExpressionOptimizer, ExpressionVisitor<Expression> {
+public abstract class BooleanExpressionOptimizer implements ExpressionTransformer, ExpressionVisitor<Expression> {
     @Override
-    public Expression optimize(Expression expression) {
+    public Expression transform(Expression expression) {
         return expression.accept(this);
     }
 
@@ -50,6 +51,16 @@ public abstract class HomogeneousExpressionOptimizer implements ExpressionOptimi
 
     @Override
     public Expression visitTextContainmentPrimitive(TextContainmentPrimitive expression) {
+        return expression;
+    }
+
+    @Override
+    public Expression visitTextPrefixPrimitive(TextPrefixPrimitive expression) {
+        return expression;
+    }
+
+    @Override
+    public Expression visitTextSuffixPrimitive(TextSuffixPrimitive expression) {
         return expression;
     }
 

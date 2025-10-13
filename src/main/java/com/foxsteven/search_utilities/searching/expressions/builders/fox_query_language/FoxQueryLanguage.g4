@@ -6,12 +6,15 @@ andExpression: term (AND term)*;
 term: NOT? (parenthesisExpression | primitiveExpression);
 
 parenthesisExpression: LEFT_PARENTHESIS expression RIGHT_PARENTHESIS;
-primitiveExpression: existenceExpression | equalityExpression | comparisonExpression | textContainmentExpression | wildcardExpression;
+primitiveExpression: existenceExpression | equalityExpression | comparisonExpression
+    | textContainmentExpression | textPrefixExpression | textSuffixExpression | wildcardExpression;
 
 existenceExpression: FIELD (EQUAL_OPERATOR | NOT_EQUAL_OPERATOR) NULL;
 equalityExpression: FIELD (EQUAL_OPERATOR | NOT_EQUAL_OPERATOR) (BOOLEAN | NUMBER | TEXT);
 comparisonExpression: FIELD (LESS_EQUAL_OPERATOR | LESS_OPERATOR | GREATER_EQUAL_OPERATOR | GREATER_OPERATOR) (NUMBER | OFFSET_DATE_TIME | LOCAL_DATE_TIME | LOCAL_DATE);
 textContainmentExpression: FIELD CONTAINMENT_OPERATOR CASE_INSENSITIVE_MARK? TEXT;
+textPrefixExpression: FIELD PREFIX_OPERATOR CASE_INSENSITIVE_MARK? TEXT;
+textSuffixExpression: FIELD SUFFIX_OPERATOR CASE_INSENSITIVE_MARK? TEXT;
 wildcardExpression: FIELD WILDCARD_OPERATOR CASE_INSENSITIVE_MARK? WILDCARD_PATTERN;
 
 AND: 'and';
@@ -29,7 +32,9 @@ LESS_OPERATOR: '<';
 GREATER_EQUAL_OPERATOR: '>=';
 GREATER_OPERATOR: '>';
 
-CONTAINMENT_OPERATOR: '@=';
+CONTAINMENT_OPERATOR: 'contains';
+PREFIX_OPERATOR: 'prefix';
+SUFFIX_OPERATOR: 'suffix';
 WILDCARD_OPERATOR: 'widlcard';
 
 CASE_INSENSITIVE_MARK: '*';

@@ -1,4 +1,4 @@
-package com.foxsteven.search_utilities.entity_loader.list_segmenters;
+package com.foxsteven.search_utilities.entity_loader.list_segmenters.constant;
 
 import java.util.Iterator;
 import java.util.List;

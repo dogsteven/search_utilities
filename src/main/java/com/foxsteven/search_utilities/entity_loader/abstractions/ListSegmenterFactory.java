@@ -1,5 +1,5 @@
 package com.foxsteven.search_utilities.entity_loader.abstractions;
 
-public interface ClassBasedListSegmenterFactory {
+public interface ListSegmenterFactory {
     <T> ListSegmenter create(Class<T> entityClass);
 }

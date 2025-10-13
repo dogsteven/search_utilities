@@ -1,4 +1,4 @@
-// Generated from /Users/rio/IdeaProjects/search_utilities/src/main/java/com/foxsteven/search_utilities/searching/expressions/builder/fox_query_language/FoxQueryLanguage.g4 by ANTLR 4.13.2
+// Generated from D:/works/search_utilities/src/main/java/com/foxsteven/search_utilities/searching/expressions/builders/fox_query_language/FoxQueryLanguage.g4 by ANTLR 4.13.2
 package com.foxsteven.search_utilities.searching.expressions.builders.fox_query_language.generated;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -70,6 +70,18 @@ public interface FoxQueryLanguageVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitTextContainmentExpression(FoxQueryLanguageParser.TextContainmentExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FoxQueryLanguageParser#textPrefixExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTextPrefixExpression(FoxQueryLanguageParser.TextPrefixExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FoxQueryLanguageParser#textSuffixExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTextSuffixExpression(FoxQueryLanguageParser.TextSuffixExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link FoxQueryLanguageParser#wildcardExpression}.
 	 * @param ctx the parse tree

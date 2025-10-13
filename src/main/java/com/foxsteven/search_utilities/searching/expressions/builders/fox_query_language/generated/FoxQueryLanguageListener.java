@@ -1,4 +1,4 @@
-// Generated from /Users/rio/IdeaProjects/search_utilities/src/main/java/com/foxsteven/search_utilities/searching/expressions/builder/fox_query_language/FoxQueryLanguage.g4 by ANTLR 4.13.2
+// Generated from D:/works/search_utilities/src/main/java/com/foxsteven/search_utilities/searching/expressions/builders/fox_query_language/FoxQueryLanguage.g4 by ANTLR 4.13.2
 package com.foxsteven.search_utilities.searching.expressions.builders.fox_query_language.generated;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -107,6 +107,26 @@ public interface FoxQueryLanguageListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTextContainmentExpression(FoxQueryLanguageParser.TextContainmentExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FoxQueryLanguageParser#textPrefixExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterTextPrefixExpression(FoxQueryLanguageParser.TextPrefixExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FoxQueryLanguageParser#textPrefixExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitTextPrefixExpression(FoxQueryLanguageParser.TextPrefixExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FoxQueryLanguageParser#textSuffixExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterTextSuffixExpression(FoxQueryLanguageParser.TextSuffixExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FoxQueryLanguageParser#textSuffixExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitTextSuffixExpression(FoxQueryLanguageParser.TextSuffixExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FoxQueryLanguageParser#wildcardExpression}.
 	 * @param ctx the parse tree

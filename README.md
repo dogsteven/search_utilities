@@ -11,9 +11,14 @@ This repository is my attempt to solve this mess.
 
 The `entity_loader` module provides functionalities for loading entities from an identifier list. The base`StringIdentifiableEntityLoader` interface doesn't guarantee that the returned entities will be in order. To solve the ordering problem, the `OrderingEntityLoaderDecorator` uses the following strategy:
 1. it segments the identifier list into segments of identifiers via a `ListSegmenter` provided based on the entity type.
-2. for each segment, it loads the corresponding entities via a wrapped `StringIdentifiableEntityLoader`, then sorts the entity list based on their positions in the identifier list, and appends the sorted entity list into the result entity list.
+2. for each segment, it loads the corresponding entities via a wrapped `StringIdentifiableEntityLoader`, then sorts the entity list based on their positions in the identifier list via a `PositionBasedListSorter`, and appends the sorted entity list into the result entity list.
 
-By providing a `ClassBasedListSegmenterFactory` implementation, you can tune performance for this decorator, segment size should not be too small to reduce the number of network round trips, and it should not be too large either because of sorting overhead.
+By providing a `ListSegmenterFactory` implementation, you can tune performance for this decorator, segment size should not be too small to reduce the number of network round trips, and it should not be too large either because of sorting overhead.
+
+Currently, there are two provided implementations for `PositionBasedListSorter`, the first one and the most basic is using the standard Java `sort` method, which is efficient enough for most use cases.
+The other is using transposition-based algorithm from Group Theory, which is extremely optimized and memory efficient, but is extremely dangerous if the assumptions of the algorithm aren't met.
+The most common scenario is that the application gets an identifier list from the search engine right before some entities are removed from the main database, when the application query the database, removed entities will absent from the list, and the algorithm will fail.
+Thus, we provide a `CombinedListSorter` which fallbacks to a safe algorithm if the fast algorithm fails, which is I think better than sanitizing the identifier list before sorting in terms of optimization.
 
 In the `searching` module, I manage a boolean expression hierarchy named `Expression`, which covers my use cases.
 The hierarchy doesn't depend on Elasticsearch (although it's inspired by Elasticsearch) so you can use this hierarchy for other search engines as well.
@@ -23,4 +28,4 @@ The hierarchy is of course shipped with double dispatcher/visitor, so you can ex
 
 The `FqlQueryBuilder` translates a `FoxQueryLanguage` expression into an Elasticsearch `Query` object. It's not actually a builder class in OOP sense, I just didn't know that to name it.
 
-I wrote this repository in 1 day, so it hasn't had unit testing yet.
+I wrote this repository in 1 day, so it hasn't had unit testing yet. Some parts are algorithmic, they need formal proofs, which are easy to write.

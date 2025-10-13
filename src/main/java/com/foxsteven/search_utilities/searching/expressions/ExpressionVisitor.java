@@ -14,5 +14,7 @@ public interface ExpressionVisitor<T> {
     T visitLocalDateTimeComparisonPrimitive(LocalDateTimeComparisonPrimitive expression);
     T visitOffsetDateTimeComparisonPrimitive(OffsetDateTimeComparisonPrimitive expression);
     T visitTextContainmentPrimitive(TextContainmentPrimitive expression);
+    T visitTextPrefixPrimitive(TextPrefixPrimitive expression);
+    T visitTextSuffixPrimitive(TextSuffixPrimitive expression);
     T visitWildcardPrimitive(WildcardPrimitive expression);
 }

@@ -1,4 +1,4 @@
-// Generated from /Users/rio/IdeaProjects/search_utilities/src/main/java/com/foxsteven/search_utilities/searching/expressions/builder/fox_query_language/FoxQueryLanguage.g4 by ANTLR 4.13.2
+// Generated from D:/works/search_utilities/src/main/java/com/foxsteven/search_utilities/searching/expressions/builders/fox_query_language/FoxQueryLanguage.g4 by ANTLR 4.13.2
 package com.foxsteven.search_utilities.searching.expressions.builders.fox_query_language.generated;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -132,6 +132,30 @@ public class FoxQueryLanguageBaseListener implements FoxQueryLanguageListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTextContainmentExpression(FoxQueryLanguageParser.TextContainmentExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTextPrefixExpression(FoxQueryLanguageParser.TextPrefixExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTextPrefixExpression(FoxQueryLanguageParser.TextPrefixExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTextSuffixExpression(FoxQueryLanguageParser.TextSuffixExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTextSuffixExpression(FoxQueryLanguageParser.TextSuffixExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

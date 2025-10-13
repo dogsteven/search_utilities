@@ -88,6 +88,8 @@ public class ParseTreeToExpressionTranslator extends FoxQueryLanguageBaseVisitor
         final var equalityExpressionContext = ctx.equalityExpression();
         final var comparisonExpressionContext = ctx.comparisonExpression();
         final var textContainmentExpressionContext = ctx.textContainmentExpression();
+        final var textPrefixExpressionContext = ctx.textPrefixExpression();
+        final var textSuffixExpressionContext = ctx.textSuffixExpression();
         final var wildcardExpressionContext = ctx.wildcardExpression();
 
         if (existenceExpressionContext != null) {
@@ -104,6 +106,14 @@ public class ParseTreeToExpressionTranslator extends FoxQueryLanguageBaseVisitor
 
         if (textContainmentExpressionContext != null) {
             return textContainmentExpressionContext.accept(this);
+        }
+
+        if (textPrefixExpressionContext != null) {
+            return textPrefixExpressionContext.accept(this);
+        }
+
+        if (textSuffixExpressionContext != null) {
+            return textSuffixExpressionContext.accept(this);
         }
 
         if (wildcardExpressionContext != null) {
@@ -196,6 +206,24 @@ public class ParseTreeToExpressionTranslator extends FoxQueryLanguageBaseVisitor
         final var isCaseInsensitive = ctx.CASE_INSENSITIVE_MARK() != null;
 
         return new TextContainmentPrimitive(field, value, isCaseInsensitive);
+    }
+
+    @Override
+    public Expression visitTextPrefixExpression(FoxQueryLanguageParser.TextPrefixExpressionContext ctx) {
+        final var field = ctx.FIELD().getText();
+        final var value = getTextContent(ctx.TEXT().getText());
+        final var isCaseInsensitive = ctx.CASE_INSENSITIVE_MARK() != null;
+
+        return new TextPrefixPrimitive(field, value, isCaseInsensitive);
+    }
+
+    @Override
+    public Expression visitTextSuffixExpression(FoxQueryLanguageParser.TextSuffixExpressionContext ctx) {
+        final var field = ctx.FIELD().getText();
+        final var value = getTextContent(ctx.TEXT().getText());
+        final var isCaseInsensitive = ctx.CASE_INSENSITIVE_MARK() != null;
+
+        return new TextSuffixPrimitive(field, value, isCaseInsensitive);
     }
 
     @Override
