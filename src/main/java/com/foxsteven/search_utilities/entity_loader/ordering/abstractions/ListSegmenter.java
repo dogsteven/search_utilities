@@ -1,4 +1,4 @@
-package com.foxsteven.search_utilities.entity_loader.abstractions;
+package com.foxsteven.search_utilities.entity_loader.ordering.abstractions;
 
 import java.util.List;
 
