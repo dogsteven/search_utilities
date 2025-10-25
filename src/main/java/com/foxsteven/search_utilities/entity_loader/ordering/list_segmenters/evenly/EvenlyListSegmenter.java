@@ -7,12 +7,15 @@ import java.util.List;
 public class EvenlyListSegmenter implements ListSegmenter {
     private final int idealSegmentSize;
 
-    public EvenlyListSegmenter(int idealSegmentSize) {
+    private final float mergeThreshold;
+
+    public EvenlyListSegmenter(int idealSegmentSize, float mergeThreshold) {
         this.idealSegmentSize = idealSegmentSize;
+        this.mergeThreshold = mergeThreshold;
     }
 
     @Override
     public <T> Iterable<List<T>> segment(List<T> list) {
-        return new EvenlyListSegments<>(list, idealSegmentSize, idealSegmentSize / 4);
+        return new EvenlyListSegments<>(list, idealSegmentSize, mergeThreshold);
     }
 }

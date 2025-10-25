@@ -13,14 +13,14 @@ public class TranspositionBasedListSorter implements PositionBasedListSorter {
 
         var index = 0;
         for (final var identifier: identifiers) {
-            positionDictionary.put(identifier, index);
+            positionDictionary.put(identifier.toLowerCase(), index);
             ++index;
         }
 
         for (index = 0; index < list.size(); ++index) {
             while (true) {
                 final var element = list.get(index);
-                final var actualIndex = positionDictionary.get(identifierAccessor.read(element));
+                final var actualIndex = positionDictionary.get(identifierAccessor.read(element).toLowerCase());
 
                 if (actualIndex == null) {
                     throw new RuntimeException("Invalid arguments");

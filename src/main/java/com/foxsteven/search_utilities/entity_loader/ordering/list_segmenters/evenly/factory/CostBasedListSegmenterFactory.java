@@ -11,9 +11,12 @@ public class CostBasedListSegmenterFactory implements ListSegmenterFactory {
 
     private final SegmentSizeEstimator segmentSizeEstimator;
 
-    public CostBasedListSegmenterFactory(SegmentSizeEstimator segmentSizeEstimator) {
+    private final float mergeThreshold;
+
+    public CostBasedListSegmenterFactory(SegmentSizeEstimator segmentSizeEstimator, float mergeThreshold) {
         this.listSegmenterDictionary = new ConcurrentHashMap<>();
         this.segmentSizeEstimator = segmentSizeEstimator;
+        this.mergeThreshold = mergeThreshold;
     }
 
     @Override
@@ -24,6 +27,7 @@ public class CostBasedListSegmenterFactory implements ListSegmenterFactory {
 
         final var segmentSize = segmentSizeEstimator.estimate(elementCost, size);
 
-        return listSegmenterDictionary.computeIfAbsent(segmentSize, EvenlyListSegmenter::new);
+        return listSegmenterDictionary.computeIfAbsent(segmentSize, (idealSegmentSize) ->
+                new EvenlyListSegmenter(idealSegmentSize, mergeThreshold));
     }
 }

@@ -27,15 +27,15 @@ public class StandardListSorter implements PositionBasedListSorter {
 
             var index = 0;
             for (final var identifier: identifiers) {
-                this.positionDictionary.put(identifier, index);
+                this.positionDictionary.put(identifier.toLowerCase(), index);
                 ++index;
             }
         }
 
         @Override
         public int compare(T o1, T o2) {
-            final var firstIdentifier = identifierAccessor.read(o1);
-            final var secondIdentifier = identifierAccessor.read(o2);
+            final var firstIdentifier = identifierAccessor.read(o1).toLowerCase();
+            final var secondIdentifier = identifierAccessor.read(o2).toLowerCase();
 
             final var firstPosition = positionDictionary.getOrDefault(firstIdentifier, Integer.MAX_VALUE);
             final var secondPosition = positionDictionary.getOrDefault(secondIdentifier, Integer.MAX_VALUE);

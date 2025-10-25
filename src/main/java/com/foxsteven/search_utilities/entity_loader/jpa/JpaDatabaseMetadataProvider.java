@@ -29,10 +29,10 @@ public abstract class JpaDatabaseMetadataProvider implements DatabaseMetadataPro
         }
 
         final var identifierField = JpaEntityReflectionUtilities
-                .getTypedIdFieldOfClassHierarchy(entityClass, String.class);
+                .getTypedIdFieldOfClassHierarchy(entityClass);
 
         if (identifierField == null) {
-            throw new IllegalArgumentException("No String-typed @Id field found in entity class hierarchy");
+            throw new IllegalArgumentException("No String-compatible @Id field found in entity class hierarchy");
         }
 
         final var columnAnnotation = identifierField.getAnnotation(Column.class);

@@ -3,13 +3,21 @@ package com.foxsteven.search_utilities.entity_loader.utilities;
 import jakarta.persistence.Id;
 
 import java.lang.reflect.Field;
+import java.util.Set;
+import java.util.UUID;
 
 public class JpaEntityReflectionUtilities {
-    public static Field getTypedIdFieldOfClassHierarchy(Class<?> clazz, Class<?> typeClass) {
+    public static final Set<Class<?>> stringConvertibleTypeClasses = Set.of(String.class, UUID.class);
+
+    public static Field getTypedIdFieldOfClassHierarchy(Class<?> clazz) {
+        return getTypedIdFieldOfClassHierarchy(clazz, stringConvertibleTypeClasses);
+    }
+
+    public static Field getTypedIdFieldOfClassHierarchy(Class<?> clazz, Set<Class<?>> typeClasses) {
         Field identifierField = null;
 
         while (clazz != null) {
-            identifierField = getTypedIdFieldOfClass(clazz, typeClass);
+            identifierField = getTypedIdFieldOfClass(clazz, typeClasses);
 
             if (identifierField != null) {
                 break;
@@ -21,11 +29,11 @@ public class JpaEntityReflectionUtilities {
         return identifierField;
     }
 
-    public static Field getTypedIdFieldOfClass(Class<?> clazz, Class<?> typeClass) {
+    public static Field getTypedIdFieldOfClass(Class<?> clazz, Set<Class<?>> typeClasses) {
         final var declaredFields = clazz.getDeclaredFields();
 
         for (final var field: declaredFields) {
-            if (field.getType() != typeClass) {
+            if (typeClasses.contains(field.getType())) {
                 continue;
             }
 

@@ -28,7 +28,7 @@ public class JpaIdentifierAccessor<T> implements IdentifierAccessor<T> {
         }
 
         try {
-            return (String) identifierField.get(entity);
+            return identifierField.get(entity).toString();
         } catch (IllegalAccessException exception) {
             throw new RuntimeException("Failed to access identifier field", exception);
         }
@@ -40,10 +40,10 @@ public class JpaIdentifierAccessor<T> implements IdentifierAccessor<T> {
         }
 
         final var identifierField = JpaEntityReflectionUtilities
-                .getTypedIdFieldOfClassHierarchy(entityClass, String.class);
+                .getTypedIdFieldOfClassHierarchy(entityClass);
 
         if (identifierField == null) {
-            throw new IllegalArgumentException("No String-typed @Id field found in entity class hierarchy");
+            throw new IllegalArgumentException("No String-compatible @Id field found in entity class hierarchy");
         }
 
         identifierField.setAccessible(true);

@@ -8,9 +8,9 @@ public class EvenlyListSegments<T> implements Iterable<List<T>> {
 
     private final int idealSegmentSize;
 
-    private final int mergeThreshold;
+    private final float mergeThreshold;
 
-    public EvenlyListSegments(List<T> list, int idealSegmentSize, int mergeThreshold) {
+    public EvenlyListSegments(List<T> list, int idealSegmentSize, float mergeThreshold) {
         this.list = list;
         this.idealSegmentSize = idealSegmentSize;
         this.mergeThreshold = mergeThreshold;
@@ -35,7 +35,7 @@ public class EvenlyListSegments<T> implements Iterable<List<T>> {
             if (extraCount == 0) {
                 this.shouldMergeLastSegment = false;
             } else {
-                this.shouldMergeLastSegment = extraCount <= mergeThreshold;
+                this.shouldMergeLastSegment = extraCount <= mergeThreshold * idealSegmentSize;
             }
         }
 
